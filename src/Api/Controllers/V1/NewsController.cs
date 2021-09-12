@@ -17,11 +17,14 @@ namespace Api.Controllers.V1
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public NewsController(IUnitOfWork unitOfWork, IMapper mapper)
+        ApplicationDbContext _context;
+        public NewsController(IUnitOfWork unitOfWork, IMapper mapper, ApplicationDbContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _context = context;
         }
+        //----------------------------Get all category----------------------
 
         [Route("categories")]
         [HttpGet]
@@ -34,6 +37,9 @@ namespace Api.Controllers.V1
             return Ok(categoryResources);
 
         }
+
+
+        //----------------------------Get All News ----------------------
 
         [Route("AllNews")]
         [HttpGet]
@@ -66,7 +72,7 @@ namespace Api.Controllers.V1
 
         }
 
-        //------------news by id ----------------------
+        //----------------------------News By Id ----------------------
 
         [Route("news/{id}")]
         [HttpGet]
@@ -79,6 +85,59 @@ namespace Api.Controllers.V1
             var newsResource = _mapper.Map<News, NewsResource>(news);
 
             return Ok(newsResource);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> CreateProduct(News news)
+        {
+            _context.News.Add(news);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetNews), new { id = news.Id }, news);
+        }
+
+        // ----------------------------Update news details ---------------
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, News news)
+        {
+            if (id != news.Id)
+            {
+                return BadRequest();
+            }
+            var product = await _context.News.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Title = news.Title;
+            product.Text = news.Text;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+        // ----------------------------Delete news details ---------------
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var news = await _context.News.FindAsync(id);
+
+            if (news == null)
+            {
+                return NotFound();
+            }
+            _context.News.Remove(news);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

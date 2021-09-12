@@ -11,10 +11,6 @@ namespace Api.Resources
         public string Title { get; set; }
         public string[] Photos { get; set; }
         public string Text { get; set; }
-        //public List<string> Categories { get; set; }
-        //public CategoryResource NewsCategories { get; set; }
-
         public List<string> NewsCategories { get; set; }
-        //public ICollection<DiscountProduct> Products { get; set; }
     }
 }
