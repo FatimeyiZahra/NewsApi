@@ -26,11 +26,11 @@ namespace Data.Configurations
 
             builder
                 .Property(m => m.Title)
-                .HasMaxLength(50)
+                .HasMaxLength(500)
                 .IsRequired();
             builder
                .Property(m => m.Text)
-               .HasMaxLength(1000)
+               .HasMaxLength(10000)
                .IsRequired();
 
             builder.ToTable("News");

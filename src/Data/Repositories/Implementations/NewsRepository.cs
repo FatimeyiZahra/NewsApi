@@ -39,8 +39,8 @@ namespace Data.Repositories.Implementations
         {
             return await _context.News
                                     .Include(p => p.NewsPhotos)
-                                    .IncludeFilter(p => p.NewsCategories.FirstOrDefault(s => s.CategoryId == categoryId))
-                                    //.Where(p=>p.NewsCategories.Any(c=>c.CategoryId==categoryId))
+                                    //.IncludeFilter(p => p.NewsCategories.FirstOrDefault(s => s.CategoryId == categoryId))
+                                    .Where(p => p.NewsCategories.Any(c => c.CategoryId == categoryId))
                                     .OrderByDescending(p => p.AddedDate)
                                     .ToListAsync();
         }
