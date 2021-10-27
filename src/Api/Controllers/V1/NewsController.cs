@@ -87,7 +87,7 @@ namespace Api.Controllers.V1
             return Ok(newsResource);
         }
 
-
+        //----------------------------create bews----------------------
         [HttpPost]
         public async Task<ActionResult> CreateProduct(News news)
         {
@@ -112,6 +112,7 @@ namespace Api.Controllers.V1
             }
             product.Title = news.Title;
             product.Text = news.Text;
+            product.Status = news.Status;
 
             try
             {

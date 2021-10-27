@@ -36,7 +36,10 @@ namespace Api
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:3000");
+                                      builder.WithOrigins("http://localhost:3000")
+                                                                                 .AllowAnyOrigin()
+                                                                                .AllowAnyHeader()
+                                                                                .AllowAnyMethod();
                                   });
             });
             services.AddControllers();
