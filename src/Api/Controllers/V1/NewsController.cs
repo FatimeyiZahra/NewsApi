@@ -89,7 +89,7 @@ namespace Api.Controllers.V1
 
         //----------------------------create bews----------------------
         [HttpPost]
-        public async Task<ActionResult> CreateProduct(News news)
+        public async Task<ActionResult> CreateNews(News news)
         {
             _context.News.Add(news);
             await _context.SaveChangesAsync();
@@ -99,20 +99,20 @@ namespace Api.Controllers.V1
 
         // ----------------------------Update news details ---------------
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, News news)
+        public async Task<IActionResult> UpdateNews(int id, News news)
         {
             if (id != news.Id)
             {
                 return BadRequest();
             }
-            var product = await _context.News.FindAsync(id);
-            if (product == null)
+            var updateNews = await _context.News.FindAsync(id);
+            if (updateNews == null)
             {
                 return NotFound();
             }
-            product.Title = news.Title;
-            product.Text = news.Text;
-            product.Status = news.Status;
+            updateNews.Title = news.Title;
+            updateNews.Text = news.Text;
+            updateNews.Status = news.Status;
 
             try
             {
@@ -127,7 +127,7 @@ namespace Api.Controllers.V1
 
         // ----------------------------Delete news details ---------------
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteNews(int id)
         {
             var news = await _context.News.FindAsync(id);
 
