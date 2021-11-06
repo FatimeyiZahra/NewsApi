@@ -93,6 +93,7 @@ namespace Api.Controllers.V1
         {
             _context.News.Add(news);
             await _context.SaveChangesAsync();
+           
 
             return CreatedAtAction(nameof(GetNews), new { id = news.Id }, news);
         }

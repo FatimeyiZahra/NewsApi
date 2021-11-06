@@ -12,6 +12,9 @@ namespace Api.Resources
         public string[] Photos { get; set; }
         public string Text { get; set; }
         public DateTime AddedDate { get; set; }
-        public List<string> NewsCategories { get; set; }
+        public CategoryResource Category { get; set; }
+        //public List<string> NewsCategories { get; set; }
+        public List<int> CategoryId { get; set; }
+        public List<string> CategoryName { get; set; }
     }
 }

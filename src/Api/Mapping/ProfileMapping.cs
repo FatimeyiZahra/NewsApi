@@ -17,7 +17,8 @@ namespace Api.Mapping
 
             CreateMap<Category, CategoryResource>();
 
-            CreateMap<NewsResource, NewsCategory>();
+
+            //CreateMap<NewsResource, NewsCategory>();
             //CreateMap<NewsCategory, NewsResource>();
 
 
@@ -26,8 +27,13 @@ namespace Api.Mapping
                                                                             .Select(p => BaseUrl + p.Photo)
                                                                             .ToArray()))
 
-              .ForMember(n => n.NewsCategories, opt => opt.MapFrom(src => src.NewsCategories
+              .ForMember(d => d.Category, opt => opt.MapFrom(src => src.NewsCategories.FirstOrDefault().Category))
+
+                .ForMember(n => n.CategoryName, opt => opt.MapFrom(src => src.NewsCategories
                                                                       .Select(s => s.Category.Name)
+                                                                      .ToList()))
+              .ForMember(n => n.CategoryId, opt => opt.MapFrom(src => src.NewsCategories
+                                                                      .Select(s => s.Category.Id)
                                                                       .ToList()));
 
         }

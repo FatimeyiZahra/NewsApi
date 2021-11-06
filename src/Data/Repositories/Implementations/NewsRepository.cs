@@ -18,11 +18,13 @@ namespace Data.Repositories.Implementations
         public async Task<IEnumerable<News>> GetAllNewWithCategories()
         {
             return await _context.News
-                                  .Include("NewsCategories")
-                                  .Include("NewsCategories.Category")
+                                  .Include(p => p.NewsCategories).ThenInclude(p => p.Category)
+                                  //.Include("NewsCategories")
+                                  //.Include("NewsCategories.Category")
                                   .Where(n => n.Status)
                                   .Include(p => p.NewsPhotos)
                                   .ToListAsync();
+            //.Include(p => p.Discounts).ThenInclude(p => p.Discount)
 
         }
 
@@ -48,6 +50,8 @@ namespace Data.Repositories.Implementations
         public async Task<News> GetNewsById(int id)
         {
             return await _context.News
+                                      .Include("NewsCategories")
+                                      .Include("NewsCategories.Category")
                                       .Include(p => p.NewsPhotos)
                                       .Where(p => p.Status && p.Id == id)
                                       .FirstOrDefaultAsync();
